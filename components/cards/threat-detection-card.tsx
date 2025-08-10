@@ -45,7 +45,7 @@ export default function ThreatDetection() {
           action={"Blocked"}
           description={threat.description}
           deviceID={threat.impactScope.entities[0].entityValue.name}
-          ip={threat.impactScope.entities[0].entityValue.ips[0]}
+          ip={threat.impactScope?.entities?.[0]?.entityValue?.ips?.[0] || "N/A"}
         />
       ))}
     </Card>
