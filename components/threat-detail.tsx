@@ -4,7 +4,7 @@ import {
   DialogPanel,
   DialogTitle,
 } from "@headlessui/react";
-import { BugIcon, Calendar, Clock } from "lucide-react";
+import { BugIcon, Calendar, Clock, TriangleAlert } from "lucide-react";
 import { useState } from "react";
 
 type ThreatDetailsProps = {
@@ -52,10 +52,17 @@ function Modal({ isOpen, onClose, threat }: ModalProps) {
         <DialogPanel className="max-w-lg space-y-4 border border-[#EBEBEB] rounded bg-white p-6 w-full">
           <div className=" flex justify-between">
             <DialogTitle className="font-bold">
-              <div className="flex flex-row gap-4 mb-2">
-                <BugIcon />
-                <p>Threat Details</p>
-              </div>
+              {isNaN(Number(threat.id)) ? (
+                <div className="flex flex-row gap-4 mb-2">
+                  <BugIcon />
+                  <p>Threat Details</p>
+                </div>
+              ) : (
+                <div className="flex flex-row gap-4 mb-2">
+                  <TriangleAlert />
+                  <p>Vulnerability Details</p>
+                </div>
+              )}
               <p className="font-normal text-neutral-500 text-sm">
                 Security incident detected and automatically blocked
               </p>
@@ -74,7 +81,7 @@ function Modal({ isOpen, onClose, threat }: ModalProps) {
                   threat.severity.slice(1)}
               </p>
               <p className=" text-green-500 bg-green-100 text-xs font-semibold px-4 py-1 w-fit h-fit rounded-full">
-                Blocked
+                {threat.action}
               </p>
             </div>
           </div>

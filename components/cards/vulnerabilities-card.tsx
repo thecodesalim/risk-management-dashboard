@@ -7,11 +7,11 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import {
-  BugIcon,
   CheckCircleIcon,
   ShieldAlertIcon,
   Calendar,
   Target,
+  TriangleAlertIcon,
 } from "lucide-react";
 import Card from "../card";
 import { useVulnerabilityDetails } from "@/hooks/vulnerabilities/use-vulnerabilities";
@@ -33,7 +33,7 @@ export default function VulnerabilitiesCard() {
     <Card
       onClick={handleClick}
       title="Vulnerabilities"
-      icon={<BugIcon />}
+      icon={<TriangleAlertIcon />}
       extra={`${vulnerabilities?.info?.name} - ${vulnerabilities?.dateNx}`}
     >
       <div className=" flex justify-center items-center w-full cursor-pointer">
@@ -96,7 +96,7 @@ function Modal({ isOpen, onClose, vulnerabilities }: ModalProps) {
           <div className="p-6 border-b border-[#EBEBEB]">
             <DialogTitle className="font-bold">
               <div className="flex flex-row gap-4 mb-2">
-                <BugIcon />
+                <TriangleAlertIcon />
                 <p>Vulnerability Scan Details</p>
               </div>
               <p className="font-normal text-neutral-500 text-sm">

@@ -56,3 +56,84 @@ type ScanItem = {
 };
 
 type ScanItemArray = ScanItem[];
+
+type EntityValue = {
+  guid: string;
+  name: string;
+  ips: string[];
+};
+
+type Entity = {
+  entityType: string;
+  entityValue: EntityValue;
+  entityId: string;
+  relatedEntities: string[];
+  relatedIndicatorIds: number[];
+  provenance: string[];
+  managementScopeGroupId: string;
+};
+
+type ImpactScope = {
+  desktopCount: number;
+  serverCount: number;
+  accountCount: number;
+  emailAddressCount: number;
+  containerCount: number;
+  cloudIdentityCount: number;
+  entities: Entity[];
+};
+
+type MatchedEvent = {
+  uuid: string;
+  matchedDateTime: string;
+  type: string;
+};
+
+type MatchedFilter = {
+  id: string;
+  name: string;
+  matchedDateTime: string;
+  mitreTechniqueIds: string[];
+  matchedEvents: MatchedEvent[];
+};
+
+type MatchedRule = {
+  id: string;
+  name: string;
+  matchedFilters: MatchedFilter[];
+};
+
+type Indicator = {
+  id: number;
+  type: string;
+  field: string;
+  value: string;
+  relatedEntities: string[];
+  filterIds: string[];
+  provenance: string[];
+};
+
+export type SecurityAlert = {
+  schemaVersion: string;
+  id: string;
+  investigationStatus: string;
+  status: string;
+  investigationResult: string;
+  workbenchLink: string;
+  alertProvider: string;
+  modelId: string;
+  model: string;
+  modelType: string;
+  score: number;
+  severity: string;
+  createdDateTime: string;
+  updatedDateTime: string;
+  ownerIds: string[];
+  incidentId: string;
+  impactScope: ImpactScope;
+  description: string;
+  matchedRules: MatchedRule[];
+  indicators: Indicator[];
+};
+
+export type SecurityAlertArray = SecurityAlert[];

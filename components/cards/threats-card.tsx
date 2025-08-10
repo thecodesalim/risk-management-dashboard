@@ -1,5 +1,5 @@
 "use client";
-import { TriangleAlertIcon } from "lucide-react";
+import { Bug } from "lucide-react";
 import Card from "../card";
 import useSWR from "swr";
 import { useThreats } from "@/hooks/vulnerabilities/use-vulnerabilities";
@@ -23,7 +23,7 @@ export default function ThreatsCard() {
   return (
     <Card
       title="Threats"
-      icon={<TriangleAlertIcon color="#9CA3AF" />}
+      icon={<Bug />}
       extra={
         <p>
           <span

@@ -6,6 +6,7 @@ import { useState } from "react";
 import clsx from "clsx";
 import { useThreats } from "@/hooks/vulnerabilities/use-vulnerabilities";
 import { formatDateTime } from "@/lib/utils";
+import { SecurityAlert } from "@/lib/types";
 
 export default function ThreatDetection() {
   const [selectedSeverity, setSelectedSeverity] = useState("");
@@ -32,12 +33,12 @@ export default function ThreatDetection() {
         <option value="medium">Medium</option>
         <option value="low">Low</option>
       </Select>
-      {threats.items.slice(0, 5).map((threat) => (
+      {threats.items.slice(0, 5).map((threat: SecurityAlert) => (
         <ThreatDetails
           key={threat.id}
           id={threat.id}
           name={threat.model}
-          type={threat.type}
+          type={""}
           severity={threat.severity}
           time={formatDateTime(threat.createdDateTime).time}
           date={formatDateTime(threat.createdDateTime).date}
