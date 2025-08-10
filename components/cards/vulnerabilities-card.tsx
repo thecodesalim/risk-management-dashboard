@@ -16,7 +16,7 @@ import {
 import Card from "../card";
 import { useVulnerabilityDetails } from "@/hooks/vulnerabilities/use-vulnerabilities";
 
-import { ModalProps } from "@/lib/types";
+import { ModalProps } from "@/types";
 import { timestampToDate } from "@/lib/utils";
 
 export default function VulnerabilitiesCard() {

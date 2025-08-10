@@ -6,7 +6,7 @@ import { useState } from "react";
 import clsx from "clsx";
 import { useThreats } from "@/hooks/vulnerabilities/use-vulnerabilities";
 import { formatDateTime } from "@/lib/utils";
-import { SecurityAlert } from "@/lib/types";
+import { SecurityAlert } from "@/types";
 
 export default function ThreatDetection() {
   const [selectedSeverity, setSelectedSeverity] = useState("");
