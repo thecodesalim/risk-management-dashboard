@@ -4,6 +4,7 @@ type CardProps = {
   children: React.ReactNode;
   extra?: React.ReactNode;
   onClick?: () => void;
+  className?: string;
 };
 
 export default function Card({
@@ -12,11 +13,12 @@ export default function Card({
   children,
   extra,
   onClick,
+  className,
 }: CardProps) {
   return (
     <div
       onClick={onClick}
-      className="flex flex-col gap-6 h-full justify-between text-gray-800 border border-[#EBEBEB] rounded p-4 px-3 bg-[#FEFEFF]"
+      className={`flex flex-col gap-6 h-full justify-between text-gray-800 border border-[#EBEBEB] rounded p-4 px-3 bg-[#FEFEFF] ${className}`}
     >
       <div className=" flex justify-between">
         <h2 className=" font-medium text-sm">{title}</h2>

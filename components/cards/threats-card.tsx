@@ -7,7 +7,7 @@ import { useThreats } from "@/hooks/vulnerabilities/use-vulnerabilities";
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function ThreatsCard() {
-  const { threats, isLoading } = useThreats("");
+  const { data: threats, isLoading } = useSWR("api/threats-today", fetcher);
 
   const {
     data: t,

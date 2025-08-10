@@ -50,7 +50,7 @@ function Modal({ isOpen, onClose, threat }: ModalProps) {
       <DialogBackdrop className="fixed inset-0 bg-black/30" />
       <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
         <DialogPanel className="max-w-lg space-y-4 border border-[#EBEBEB] rounded bg-white p-6 w-full">
-          <div className=" flex justify-between">
+          <div className=" flex justify-between pb-6 border-b border-[#EBEBEB]">
             <DialogTitle className="font-bold">
               {isNaN(Number(threat.id)) ? (
                 <div className="flex flex-row gap-4 mb-2">
@@ -70,12 +70,14 @@ function Modal({ isOpen, onClose, threat }: ModalProps) {
             <div className=" flex gap-2">
               <p
                 className={`${
-                  threat.severity === "high"
+                  threat.severity === "critical"
                     ? "bg-red-500"
-                    : threat.severity === "medium"
+                    : threat.severity === "high"
                     ? "bg-orange-500"
+                    : threat.severity === "medium"
+                    ? "bg-yellow-600"
                     : "bg-green-500"
-                } text-white text-xs font-semibold px-4 py-1 w-fit h-fit rounded-full`}
+                } text-white text-xs font-medium px-4 py-1 w-fit h-fit rounded-full`}
               >
                 {threat.severity.charAt(0).toUpperCase() +
                   threat.severity.slice(1)}
@@ -144,7 +146,7 @@ export default function ThreatDetails({
     <>
       <div
         onClick={handleClick}
-        className="cursor-pointer hover:bg-neutral-50 p-1 rounded-xl"
+        className="cursor-pointer hover:bg-neutral-100 p-2 rounded-xl"
       >
         <div className="grid grid-cols-[1.5fr_1fr_1fr] gap-4 text-xs">
           <div className="space-y-1">
@@ -154,10 +156,12 @@ export default function ThreatDetails({
           <div className="space-y-1">
             <p
               className={`${
-                severity === "high"
+                severity === "critical"
                   ? "bg-red-500"
-                  : severity === "medium"
+                  : severity === "high"
                   ? "bg-orange-500"
+                  : severity === "medium"
+                  ? "bg-yellow-600"
                   : "bg-green-500"
               } text-white text-xs font-medium px-4 py-1 w-fit rounded-full`}
             >

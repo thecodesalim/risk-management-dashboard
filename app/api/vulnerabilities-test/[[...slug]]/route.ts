@@ -1,10 +1,17 @@
-export async function GET() {
+export async function GET(request: Request, { params }) {
+  const { slug } = await params;
+
   const headers: HeadersInit = {
     "X-ApiKeys": `${process.env.APIKEYS}`,
   };
 
   const t = await fetch(
-    `https://cloud.tenable.com/workbenches/vulnerabilities`,
+    `https://cloud.tenable.com/workbenches/vulnerabilities${
+      slug !== undefined
+        ? "?filter.0.filter=severity&filter.0.quality=eq&filter.0.value=" +
+          slug[0]
+        : ""
+    }`,
     {
       method: "GET",
       headers,

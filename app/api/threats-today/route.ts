@@ -1,6 +1,4 @@
-export async function GET(request: Request, { params }) {
-  const { slug } = await params;
-
+export async function GET() {
   const today = new Date();
   const yesterday = new Date(today);
 
@@ -12,23 +10,19 @@ export async function GET(request: Request, { params }) {
   const endDateTime = today.toISOString().replace(/\.\d{3}Z$/, "Z");
   const startDateTime = yesterday.toISOString().replace(/\.\d{3}Z$/, "Z");
 
-  const headers: HeadersInit = {
-    Authorization: `Bearer ${process.env.TOKEN}`,
-  };
-
-  if (typeof slug !== "undefined") {
-    headers["TMV1-Filter"] = `severity eq '${slug[0]}'`;
-  }
-
   const t = await fetch(
     `https://api.xdr.trendmicro.com/v3.0/workbench/alerts?startDateTime=${startDateTime}&endDateTime=${endDateTime}`,
     {
       method: "GET",
-      headers,
+      headers: {
+        Authorization: `Bearer ${process.env.TOKEN}`,
+      },
     }
   );
 
   if (!t.ok) {
+    const errorText = await t.text();
+    console.log("Error response:", errorText);
     throw new Error(`HTTP error! status: ${t.status}`);
   }
 

@@ -3,10 +3,7 @@ import useSWR from "swr";
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export function useThreats(severity: string) {
-  const { data, error, isLoading } = useSWR(
-    `api/threats-today/${severity}`,
-    fetcher
-  );
+  const { data, error, isLoading } = useSWR(`api/threats/${severity}`, fetcher);
 
   const loading = !data && !error;
 
@@ -17,9 +14,9 @@ export function useThreats(severity: string) {
   };
 }
 
-export function useVulnerabilities() {
+export function useVulnerabilities(severity: string) {
   const { data, error, isLoading } = useSWR(
-    `api/vulnerabilities-today/`,
+    `api/vulnerabilities-test/${severity}`,
     fetcher
   );
 
