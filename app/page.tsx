@@ -4,13 +4,13 @@ import {
   CircleCheckBigIcon,
   ActivityIcon,
   LockIcon,
-  GroupIcon,
 } from "lucide-react";
 import Card from "@/components/card";
 import ThreatDetection from "../components/cards/threat-detection-card";
 import ThreatsCard from "../components/cards/threats-card";
 import VulnerabilityDetection from "@/components/cards/vulnerability-detection-card";
 import VulnerabilitiesCard from "@/components/cards/vulnerabilities-card";
+import ThreatCategories from "@/components/cards/threat-categories";
 
 export default function Home() {
   return (
@@ -29,11 +29,7 @@ export default function Home() {
           </div>
         </Card>
         <ThreatsCard />
-        <Card title="Threat Categories" icon={<GroupIcon />}>
-          <div className=" flex justify-center items-center w-full">
-            <p className=" font-medium">Coming soon</p>
-          </div>
-        </Card>
+        <ThreatCategories />
         <VulnerabilitiesCard />
         <Card
           title="Incidents Resolved"

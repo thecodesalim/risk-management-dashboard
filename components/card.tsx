@@ -25,7 +25,7 @@ export default function Card({
         {icon}
       </div>
       <div className=" space-y-6">{children}</div>
-      <div className=" text-xs text-neutral-500">{extra}</div>
+      {extra ? <div className=" text-xs text-neutral-600">{extra}</div> : ""}
     </div>
   );
 }

@@ -40,3 +40,17 @@ export function useVulnerabilityDetails() {
     vulnerabilities: data,
   };
 }
+
+export function useThreatCategories() {
+  const { data, error, isLoading } = useSWR(`api/ai`, fetcher);
+
+  const loading = !data && !error;
+
+  console.log(data, "twice");
+
+  return {
+    loading,
+    isLoading,
+    threatCategories: data,
+  };
+}

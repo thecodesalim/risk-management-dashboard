@@ -137,3 +137,30 @@ export type SecurityAlert = {
 };
 
 export type SecurityAlertArray = SecurityAlert[];
+
+export type ThreatItem = {
+  threat_type: string;
+  threat_id: string;
+  threat_model: string;
+};
+
+export type ThreatsData = {
+  totalCount: number;
+  count: number;
+  items: ThreatItem[];
+};
+
+export type ThreatResponse = {
+  threats: ThreatsData;
+};
+
+export type ThreatCounts = {
+  [key: string]: number;
+};
+
+export type ThreatPercentages = {
+  [key: string]: {
+    count: number;
+    percentage: number;
+  };
+};

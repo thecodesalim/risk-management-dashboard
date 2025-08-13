@@ -1,3 +1,10 @@
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
 export function timestampToDate(timestamp: number): string {
   const date = new Date(timestamp * 1000);
   const day = date.getDate().toString().padStart(2, "0");
