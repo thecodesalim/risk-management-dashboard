@@ -23,7 +23,7 @@ export default function ThreatsCard() {
   return (
     <Card
       title="Threats"
-      icon={<Bug />}
+      icon={<Bug className="h-4 w-4 text-muted-foreground" />}
       extra={
         <p>
           <span

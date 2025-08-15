@@ -1,17 +1,6 @@
 export async function GET(request: Request, { params }) {
   const { slug } = await params;
 
-  const today = new Date();
-  const yesterday = new Date(today);
-
-  today.setUTCHours(12, 0, 0, 0);
-  yesterday.setUTCHours(12, 0, 0, 0);
-
-  yesterday.setDate(today.getDate() - 1);
-
-  const endDateTime = today.toISOString().replace(/\.\d{3}Z$/, "Z");
-  const startDateTime = yesterday.toISOString().replace(/\.\d{3}Z$/, "Z");
-
   const headers: HeadersInit = {
     Authorization: `Bearer ${process.env.TOKEN}`,
   };

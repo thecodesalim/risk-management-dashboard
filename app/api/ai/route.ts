@@ -54,8 +54,6 @@ export async function GET() {
 
   const classifiedThreats = JSON.parse(cleanJsonString);
 
-  console.log(cleanJsonString);
-
   return new Response(JSON.stringify(classifiedThreats), {
     status: 200,
     headers: { "Content-Type": "application/json" },

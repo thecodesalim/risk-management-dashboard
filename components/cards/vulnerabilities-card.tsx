@@ -33,7 +33,7 @@ export default function VulnerabilitiesCard() {
     <Card
       onClick={handleClick}
       title="Vulnerabilities"
-      icon={<TriangleAlertIcon />}
+      icon={<TriangleAlertIcon className="h-4 w-4 text-muted-foreground" />}
       extra={`${vulnerabilities?.info?.name} - ${vulnerabilities?.dateNx}`}
     >
       <div className=" flex justify-center items-center w-full cursor-pointer">

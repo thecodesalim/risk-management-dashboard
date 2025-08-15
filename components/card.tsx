@@ -21,7 +21,7 @@ export default function Card({
       className={`flex flex-col gap-6 h-full justify-between text-gray-800 border border-[#EBEBEB] rounded p-4 px-3 bg-[#FEFEFF] ${className}`}
     >
       <div className=" flex justify-between">
-        <h2 className=" font-medium text-sm">{title}</h2>
+        <h2 className=" font-bold text-sm">{title}</h2>
         {icon}
       </div>
       <div className=" space-y-6">{children}</div>

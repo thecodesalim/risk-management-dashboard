@@ -1,6 +1,5 @@
 import {
   RefreshCwIcon,
-  ShieldIcon,
   CircleCheckBigIcon,
   ActivityIcon,
   LockIcon,
@@ -11,6 +10,7 @@ import ThreatsCard from "../components/cards/threats-card";
 import VulnerabilityDetection from "@/components/cards/vulnerability-detection-card";
 import VulnerabilitiesCard from "@/components/cards/vulnerabilities-card";
 import ThreatCategories from "@/components/cards/threat-categories";
+import { RiskScoreCard } from "@/components/cards/risk-score-card";
 
 export default function Home() {
   return (
@@ -23,17 +23,15 @@ export default function Home() {
         <RefreshCwIcon className=" cursor-pointer" />
       </div>
       <main className="grid grid-cols-[1fr_1fr_1fr_1fr] gap-4">
-        <Card title="Risk Score" icon={<ShieldIcon />} extra="Medium">
-          <div className=" flex justify-center items-center w-full">
-            <p className=" text-3xl text-orange-500 font-semibold">72/100</p>
-          </div>
-        </Card>
+        <RiskScoreCard />
         <ThreatsCard />
         <ThreatCategories />
         <VulnerabilitiesCard />
         <Card
           title="Incidents Resolved"
-          icon={<CircleCheckBigIcon />}
+          icon={
+            <CircleCheckBigIcon className="h-4 w-4 text-muted-foreground" />
+          }
           extra="Avg. resolution: 2.4h"
         >
           <div className=" flex justify-center items-center w-full">
@@ -41,13 +39,20 @@ export default function Home() {
           </div>
         </Card>
 
-        <Card title="Compliance Score" icon={<LockIcon />} extra="Excellent">
+        <Card
+          title="Compliance Score"
+          icon={<LockIcon className="h-4 w-4 text-muted-foreground" />}
+          extra="Excellent"
+        >
           <div className=" flex justify-center items-center w-full">
             <p className=" text-3xl text-green-500 font-semibold">72/100</p>
           </div>
         </Card>
         <div className=" col-span-2">
-          <Card title="Interactions Over Time" icon={<ActivityIcon />}>
+          <Card
+            title="Interactions Over Time"
+            icon={<ActivityIcon className="h-4 w-4 text-muted-foreground" />}
+          >
             <div className=" flex justify-center items-center w-full">
               <p className=" text-3xl font-semibold">Chart</p>
             </div>

@@ -53,13 +53,13 @@ function Modal({ isOpen, onClose, threat }: ModalProps) {
           <div className=" flex justify-between pb-6 border-b border-[#EBEBEB]">
             <DialogTitle className="font-bold">
               {isNaN(Number(threat.id)) ? (
-                <div className="flex flex-row gap-4 mb-2">
-                  <BugIcon />
+                <div className="flex flex-row gap-4 mb-2 items-center">
+                  <BugIcon className="h-4 w-4 text-muted-foreground" />
                   <p>Threat Details</p>
                 </div>
               ) : (
-                <div className="flex flex-row gap-4 mb-2">
-                  <TriangleAlert />
+                <div className="flex flex-row gap-4 mb-2 items-center">
+                  <TriangleAlert className="h-4 w-4 text-muted-foreground" />
                   <p>Vulnerability Details</p>
                 </div>
               )}

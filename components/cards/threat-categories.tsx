@@ -14,7 +14,10 @@ export default function ThreatCategories() {
   const t = convertToThreatPercentages(threatCategories);
 
   return (
-    <Card title="Threat Categories" icon={<GroupIcon />}>
+    <Card
+      title="Threat Categories"
+      icon={<GroupIcon className="h-4 w-4 text-muted-foreground" />}
+    >
       <div className=" grid grid-row-[1fr_1fr] gap-2 max-h-20 overflow-y-auto w-full">
         {Object.entries(t).map(([threatType, data]) => (
           <ThreatCategoriesItem

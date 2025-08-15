@@ -46,11 +46,21 @@ export function useThreatCategories() {
 
   const loading = !data && !error;
 
-  console.log(data, "twice");
-
   return {
     loading,
     isLoading,
     threatCategories: data,
+  };
+}
+
+export function useRiskScore() {
+  const { data, error, isLoading } = useSWR(`api/risk-score`, fetcher);
+
+  const loading = !data && !error;
+
+  return {
+    loading,
+    isLoading,
+    riskScore: data,
   };
 }

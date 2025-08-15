@@ -164,3 +164,20 @@ export type ThreatPercentages = {
     percentage: number;
   };
 };
+
+export type RiskItem = {
+  name: string;
+  id: string;
+  parent: string | null;
+  children: string[];
+  riskIndex: number;
+  riskLevel: "low" | "medium" | "high" | "critical";
+  assetCount: number;
+  updatedDateTime: string;
+};
+
+export type RiskDataResponse = {
+  items: RiskItem[];
+  count: number;
+  totalCount: number;
+};
