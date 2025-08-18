@@ -11,7 +11,7 @@ export default function TotalAssets() {
       ) : (
         <p className=" text-sm">
           Total Devices{" "}
-          <span className="font-medium text-lg">{riskScore.assetCount}</span>{" "}
+          <span className="font-medium text-lg">{riskScore?.assetCount}</span>{" "}
         </p>
       )}
     </div>

@@ -16,7 +16,7 @@ export default function Home() {
       <div className=" flex justify-between items-center mb-8 text-black">
         <div className=" flex items-center">
           <img src={"/logo.svg"} />
-          <h1 className=" text-lg font-semibold">Risk Management Dashboard</h1>
+          <h1 className=" text-lg font-semibold">Cyber Risk Dashboard</h1>
         </div>
         <RefreshCwIcon className=" cursor-pointer h-4 w-4" />
       </div>
