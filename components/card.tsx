@@ -1,3 +1,5 @@
+import LoadingState from "./loading-state";
+
 type CardProps = {
   title: string;
   icon?: React.ReactNode;
@@ -5,6 +7,7 @@ type CardProps = {
   extra?: React.ReactNode;
   onClick?: () => void;
   className?: string;
+  loading?: boolean;
 };
 
 export default function Card({
@@ -14,6 +17,7 @@ export default function Card({
   extra,
   onClick,
   className,
+  loading,
 }: CardProps) {
   return (
     <div
@@ -21,10 +25,14 @@ export default function Card({
       className={`flex flex-col gap-6 h-full justify-between text-gray-800 border border-[#EBEBEB] rounded p-4 px-3 bg-[#FEFEFF] ${className}`}
     >
       <div className=" flex justify-between">
-        <h2 className=" font-bold text-sm">{title}</h2>
+        <h2 className=" text-xs font-medium">{title}</h2>
         {icon}
       </div>
-      <div className=" space-y-6">{children}</div>
+      {loading ? (
+        <LoadingState />
+      ) : (
+        <div className=" space-y-6 h-full w-full">{children}</div>
+      )}
       {extra ? <div className=" text-xs text-neutral-600">{extra}</div> : ""}
     </div>
   );

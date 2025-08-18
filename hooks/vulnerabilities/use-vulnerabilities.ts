@@ -5,10 +5,8 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 export function useThreats(severity: string) {
   const { data, error, isLoading } = useSWR(`api/threats/${severity}`, fetcher);
 
-  const loading = !data && !error;
-
   return {
-    loading,
+    error,
     isLoading,
     threats: data,
   };
@@ -20,22 +18,18 @@ export function useVulnerabilities(severity: string) {
     fetcher
   );
 
-  const loading = !data && !error;
-
   return {
-    loading,
+    error,
     isLoading,
     vulnerabilities: data?.vulnerabilities,
   };
 }
 
 export function useVulnerabilityDetails() {
-  const { data, error, isLoading } = useSWR(`api/vulnerabilities/`, fetcher);
-
-  const loading = !data && !error;
+  const { data, error, isLoading } = useSWR(`api/vulnerabilities`, fetcher);
 
   return {
-    loading,
+    error,
     isLoading,
     vulnerabilities: data,
   };
@@ -44,10 +38,8 @@ export function useVulnerabilityDetails() {
 export function useThreatCategories() {
   const { data, error, isLoading } = useSWR(`api/ai`, fetcher);
 
-  const loading = !data && !error;
-
   return {
-    loading,
+    error,
     isLoading,
     threatCategories: data,
   };
@@ -56,11 +48,9 @@ export function useThreatCategories() {
 export function useRiskScore() {
   const { data, error, isLoading } = useSWR(`api/risk-score`, fetcher);
 
-  const loading = !data && !error;
-
   return {
-    loading,
     isLoading,
+    error,
     riskScore: data,
   };
 }

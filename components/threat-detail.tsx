@@ -51,7 +51,7 @@ function Modal({ isOpen, onClose, threat }: ModalProps) {
       <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
         <DialogPanel className="max-w-lg space-y-4 border border-[#EBEBEB] rounded bg-white p-6 w-full">
           <div className=" flex justify-between pb-6 border-b border-[#EBEBEB]">
-            <DialogTitle className="font-bold">
+            <DialogTitle className="font-medium">
               {isNaN(Number(threat.id)) ? (
                 <div className="flex flex-row gap-4 mb-2 items-center">
                   <BugIcon className="h-4 w-4 text-muted-foreground" />
@@ -148,10 +148,15 @@ export default function ThreatDetails({
         onClick={handleClick}
         className="cursor-pointer hover:bg-neutral-100 p-2 rounded-xl"
       >
-        <div className="grid grid-cols-[1.5fr_1fr_1fr] gap-4 text-xs">
+        <div className="grid grid-cols-[2fr_1fr_1fr] gap-4 text-xs">
           <div className="space-y-1">
             <p>{name}</p>
             <p className="text-sm text-neutral-400">{type}</p>
+            {time ? (
+              <p className="text-xs text-neutral-400">{`${date} ${time}`}</p>
+            ) : (
+              " "
+            )}
           </div>
           <div className="space-y-1">
             <p
@@ -167,11 +172,6 @@ export default function ThreatDetails({
             >
               {severity.charAt(0).toUpperCase() + severity.slice(1)}
             </p>
-            {time ? (
-              <p className="text-xs text-neutral-400">{`${date} ${time}`}</p>
-            ) : (
-              " "
-            )}
           </div>
           <div className="space-y-1">
             <p className="text-green-500">{action}</p>

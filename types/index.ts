@@ -13,6 +13,7 @@ export type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
   threat?: ThreatDetailsProps;
+  finding: number;
   vulnerabilities?: ScanItemArray;
 };
 

@@ -10,7 +10,7 @@ import { SecurityAlert } from "@/types";
 
 export default function ThreatDetection() {
   const [selectedSeverity, setSelectedSeverity] = useState("");
-  const { threats, isLoading, loading } = useThreats(selectedSeverity);
+  const { threats, isLoading } = useThreats(selectedSeverity);
 
   return (
     <Card title="Realtime Threat Detection" extra="">
@@ -34,7 +34,7 @@ export default function ThreatDetection() {
 
       <div className="flex-1 overflow-y-auto max-h-96">
         <div className="space-y-4">
-          {isLoading || loading ? (
+          {isLoading ? (
             Array.from({ length: 10 }).map((_, index) => (
               <div key={index} className="animate-pulse">
                 <div className="bg-gray-200 rounded-lg p-4 h-12"></div>

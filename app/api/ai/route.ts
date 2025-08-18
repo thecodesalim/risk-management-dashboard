@@ -45,6 +45,8 @@ export async function GET() {
 
   const data = await t.json();
 
+  console.log(data, "dripp");
+
   const responseText = data.candidates[0].content.parts[0].text;
 
   let cleanJsonString = responseText.trim();

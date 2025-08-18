@@ -7,9 +7,7 @@ import { ThreatCounts, ThreatPercentages, ThreatResponse } from "@/types";
 import { Progress } from "../ui/progress";
 
 export default function ThreatCategories() {
-  const { threatCategories, isLoading, loading } = useThreatCategories();
-
-  if (isLoading || loading || !threatCategories) return "Loading...";
+  const { threatCategories, isLoading } = useThreatCategories();
 
   const t = convertToThreatPercentages(threatCategories);
 
@@ -17,6 +15,7 @@ export default function ThreatCategories() {
     <Card
       title="Threat Categories"
       icon={<GroupIcon className="h-4 w-4 text-muted-foreground" />}
+      loading={isLoading || !threatCategories}
     >
       <div className=" grid grid-row-[1fr_1fr] gap-2 max-h-20 overflow-y-auto w-full">
         {Object.entries(t).map(([threatType, data]) => (
@@ -39,9 +38,9 @@ function ThreatCategoriesItem({
   progress: number;
 }) {
   return (
-    <div className=" flex gap-1 items-center text-sm justify-between">
-      <p className=" font-medium">{type}</p>
-      <Progress value={progress} color="orangered" className="w-[40%]" />
+    <div className=" grid grid-cols-2 gap-1 items-center">
+      <p className=" text-xs">{type}</p>
+      <Progress value={progress} color="orangered" className="w-full" />
     </div>
   );
 }
