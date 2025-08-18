@@ -39,7 +39,7 @@ function ThreatCategoriesItem({
 }) {
   return (
     <div className=" grid grid-cols-2 gap-1 items-center">
-      <p className=" text-xs">{type}</p>
+      <p className=" text-xs">{type.charAt(0).toUpperCase() + type.slice(1)}</p>
       <Progress value={progress} color="orangered" className="w-full" />
     </div>
   );

@@ -15,16 +15,27 @@ export async function GET() {
       {
         parts: [
           {
-            text: `Group the following items into the type of cybersecurity threats e.g brute force, malware, ddos, phishing, etc. return only a valid JSON format {
+            text: `Group the following items into back door, malware(trojan, virus, ransomware), ddos, phishing, others. return only a valid JSON format. return only a valid JSON in this format {
   "threats": {
     "totalCount": 31,
     "count": 10,
     "items": [
+       {
+        "threat_type": "Malware",
+        "threat_id": "WB-21498-20250818-00007",
+        "threat_model": "Possible Renamed AutoIt Executable",
+        "indicators": [
+          "UMS-Windows-14.12.0-x86_64.exe"
+        ]
+      },
       {
-        "threat_type": "Command and Control",
-        "threat_id": "WB-21498-20250813-00023",
-        "threat_model": "[Heuristic Attribute] Command and Control - Application Layer Protocol"
-      },  
+        "threat_type": "Back Door",
+        "threat_id": "WB-21498-20250818-00002",
+        "threat_model": "[Heuristic Attribute] Backdoor File Detection",
+        "indicators": [
+          "Backdoor.Win32.PLUGX.SM"
+        ]
+      },
     ]
   }
 }.`,
@@ -44,8 +55,6 @@ export async function GET() {
   });
 
   const data = await t.json();
-
-  console.log(data, "dripp");
 
   const responseText = data.candidates[0].content.parts[0].text;
 

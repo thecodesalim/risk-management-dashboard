@@ -1,4 +1,4 @@
-import { RefreshCwIcon, CircleCheckBigIcon, LockIcon } from "lucide-react";
+import { RefreshCwIcon, CircleCheckBigIcon } from "lucide-react";
 import Card from "@/components/card";
 import ThreatDetection from "../components/cards/threat-detection-card";
 import ThreatsCard from "../components/cards/threats-card";
@@ -8,6 +8,7 @@ import ThreatCategories from "@/components/cards/threat-categories";
 import { RiskScoreCard } from "@/components/cards/risk-score-card";
 import ThreatChart from "@/components/cards/threat-chart";
 import TotalAssets from "@/components/total-assets";
+import ComplianceScoreCard from "@/components/cards/compliance-score-card";
 
 export default function Home() {
   return (
@@ -39,24 +40,8 @@ export default function Home() {
           </div>
         </Card>
 
-        <Card
-          title="Compliance Score"
-          icon={<LockIcon className="h-4 w-4 text-muted-foreground" />}
-          extra="Excellent"
-        >
-          <div className=" flex justify-center items-center w-full">
-            <p className=" text-3xl text-green-500 font-semibold">72/100</p>
-          </div>
-        </Card>
+        <ComplianceScoreCard />
         <div className=" col-span-2">
-          {/* <Card
-            title="Interactions Over Time"
-            icon={<ActivityIcon className="h-4 w-4 text-muted-foreground" />}
-          >
-            <div className=" flex justify-center items-center w-full">
-              <p className=" text-3xl font-semibold">Chart</p>
-            </div>
-          </Card> */}
           <ThreatChart />
         </div>
         <div className=" row-span-2 col-span-2">

@@ -1,5 +1,14 @@
 export async function GET(request: Request, { params }) {
-  const { slug } = await params;
+  const t = await getVulnerabilities(request, { params });
+
+  return new Response(JSON.stringify(t), {
+    status: 200,
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
+export async function getVulnerabilities(request: Request, { params }) {
+  const { slug } = (await params) || {};
 
   const headers: HeadersInit = {
     "X-ApiKeys": `${process.env.APIKEYS}`,
@@ -24,20 +33,5 @@ export async function GET(request: Request, { params }) {
 
   const data = await t.json();
 
-  return new Response(JSON.stringify(data), {
-    status: 200,
-    headers: { "Content-Type": "application/json" },
-  });
-}
-
-export async function POST(request: Request) {
-  const body = await request.json();
-  const { name } = body;
-
-  const newUser = { id: Date.now(), name };
-
-  return new Response(JSON.stringify(newUser), {
-    status: 201,
-    headers: { "Content-Type": "application/json" },
-  });
+  return data;
 }

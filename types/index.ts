@@ -182,3 +182,17 @@ export type RiskDataResponse = {
   count: number;
   totalCount: number;
 };
+
+export type RiskScoreResponse = {
+  cvss3_base_score?: number;
+  count: number;
+  plugin_family: string;
+  plugin_id: number;
+  plugin_name: string;
+  vulnerability_state: string;
+  severity: number;
+  accepted_count: number;
+  recasted_count: number;
+  counts_by_severity: { count: number; value: number }[];
+  cvss_base_score?: number;
+};
