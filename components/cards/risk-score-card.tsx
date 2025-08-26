@@ -12,20 +12,22 @@ export function RiskScoreCard() {
       title="Risk Score"
       icon={<ShieldIcon className="h-4 w-4 text-muted-foreground" />}
       extra={
-        <p
-          className={`${
-            riskScore?.riskLevel === "critical"
-              ? "bg-red-500"
-              : riskScore?.riskLevel === "high"
-              ? "bg-orange-500"
-              : riskScore?.riskLevel === "medium"
-              ? "bg-yellow-600"
-              : "bg-green-500"
-          } text-white text-xs font-medium px-4 py-1 w-fit rounded-full`}
-        >
-          {riskScore?.riskLevel.charAt(0).toUpperCase() +
-            riskScore?.riskLevel.slice(1)}
-        </p>
+        riskScore?.riskLevel ? (
+          <p
+            className={`${
+              riskScore.riskLevel === "critical"
+                ? "bg-red-500"
+                : riskScore.riskLevel === "high"
+                ? "bg-orange-500"
+                : riskScore.riskLevel === "medium"
+                ? "bg-yellow-600"
+                : "bg-green-500"
+            } text-white text-xs font-medium px-4 py-1 w-fit rounded-full`}
+          >
+            {riskScore.riskLevel.charAt(0).toUpperCase() +
+              riskScore.riskLevel.slice(1)}
+          </p>
+        ) : null
       }
     >
       <div className="flex justify-center items-center w-full">

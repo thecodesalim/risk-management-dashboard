@@ -52,6 +52,7 @@ function convertToThreatCounts(data?: ThreatResponse): ThreatCounts {
     !data.threats.items ||
     !Array.isArray(data.threats.items)
   ) {
+    console.log("Invalid or missing data:", data);
     return {};
   }
 

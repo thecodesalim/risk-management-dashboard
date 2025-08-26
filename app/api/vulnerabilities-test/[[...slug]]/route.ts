@@ -7,7 +7,10 @@ export async function GET(request: Request, { params }) {
   });
 }
 
-export async function getVulnerabilities(request: Request, { params }) {
+export async function getVulnerabilities(
+  request: Request,
+  { params }: { params: any }
+) {
   const { slug } = (await params) || {};
 
   const headers: HeadersInit = {

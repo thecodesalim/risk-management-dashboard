@@ -1,4 +1,4 @@
-import { RefreshCwIcon, CircleCheckBigIcon } from "lucide-react";
+import { RefreshCwIcon, CircleCheckBigIcon, FileText } from "lucide-react";
 import Card from "@/components/card";
 import ThreatDetection from "../components/cards/threat-detection-card";
 import ThreatsCard from "../components/cards/threats-card";
@@ -9,6 +9,8 @@ import { RiskScoreCard } from "@/components/cards/risk-score-card";
 import ThreatChart from "@/components/cards/threat-chart";
 import TotalAssets from "@/components/total-assets";
 import ComplianceScoreCard from "@/components/cards/compliance-score-card";
+import { Button } from "@headlessui/react";
+import ReportModal from "@/components/report-modal";
 
 export default function Home() {
   return (
@@ -18,7 +20,16 @@ export default function Home() {
           <img src={"/logo.svg"} />
           <h1 className=" text-lg font-semibold">Cyber Risk Dashboard</h1>
         </div>
-        <RefreshCwIcon className=" cursor-pointer h-4 w-4" />
+        <div className=" flex items-center gap-4">
+          <Button className="inline-flex items-center gap-2 rounded-md bg-blue-700 px-3 py-1.5 text-sm/6 font-medium text-white shadow-inner shadow-white/10 focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-blue-600 data-open:bg-blue-700">
+            <FileText className="h-4 w-4 mr-2" />
+            Generate Report
+          </Button>
+          <Button className="inline-flex items-center gap-2 border rounded-md px-3 py-1.5 text-sm/6 font-medium text-black shadow-inner shadow-white/10 focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-neutral-100 data-open:bg-neutral-100 ">
+            <RefreshCwIcon className="h-4 w-4 mr-2" />
+            Refresh
+          </Button>
+        </div>
       </div>
       <div className=" w-full flex justify-end">
         <TotalAssets />
@@ -51,6 +62,7 @@ export default function Home() {
           <VulnerabilityDetection />
         </div>
       </main>
+      <ReportModal />
     </div>
   );
 }
