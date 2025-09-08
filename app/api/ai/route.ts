@@ -1,4 +1,4 @@
-import { getThreatsToday } from "../threats-today/route";
+import { getThreatsToday } from "@/lib/utils";
 
 export async function GET() {
   const API_KEY = process.env.GEMINI || "";

@@ -1,5 +1,7 @@
 "use client";
+import { useState } from "react";
 import {
+  Button,
   Dialog,
   DialogBackdrop,
   DialogPanel,
@@ -11,21 +13,38 @@ import {
   FileText,
   Shield,
 } from "lucide-react";
-import {
-  Page,
-  Text,
-  View,
-  Document,
-  StyleSheet,
-  PDFDownloadLink,
-} from "@react-pdf/renderer";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 import { RiskScoreCard } from "./cards/risk-score-card";
 import ThreatsCard from "./cards/threats-card";
 import { SecurityReportDocument } from "./pdf";
+import { useRiskScore } from "@/hooks/vulnerabilities/use-vulnerabilities";
+import useSWR from "swr";
 
-export default function ReportModal() {
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+export default function ReportModalButton() {
+  const [isOpen, setIsOpen] = useState(false);
   return (
-    <Dialog open={true} onClose={() => {}} className="relative z-50 text-black">
+    <>
+      <Button
+        onClick={() => setIsOpen(true)}
+        className="inline-flex items-center gap-2 rounded-md bg-blue-700 px-3 py-1.5 text-sm/6 font-medium text-white shadow-inner shadow-white/10 focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-blue-600 data-open:bg-blue-700"
+      >
+        <FileText className="h-4 w-4 mr-2" />
+        Generate Report
+      </Button>
+      <ReportModal open={isOpen} close={() => setIsOpen(false)} />
+    </>
+  );
+}
+
+function ReportModal({ open, close }: { open: boolean; close: () => void }) {
+  const { riskScore } = useRiskScore();
+  const { data: threats } = useSWR("api/threats-today", fetcher);
+  const { data: t } = useSWR("api/threats-yesterday", fetcher);
+  const diff = threats?.totalCount - t?.totalCount;
+  return (
+    <Dialog open={open} onClose={close} className="relative z-50 text-black">
       <DialogBackdrop className="fixed inset-0 bg-black/30" />
       <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
         <DialogPanel className="max-w-lg max-h-[80vh] overflow-y-auto space-y-4 border border-[#EBEBEB] rounded bg-white p-6 w-full">
@@ -45,15 +64,16 @@ export default function ReportModal() {
                   <span className=" font-medium">
                     Overall Security Posture:
                   </span>{" "}
-                  Medium Risk (61.1/100) - Your organization maintains a
-                  reasonable security stance with active threat monitoring and
-                  incident response capabilities.
+                  Medium Risk ({riskScore?.riskIndex}/100) - Your organization
+                  maintains a reasonable security stance with active threat
+                  monitoring and incident response capabilities.
                 </p>
                 <p>
-                  <span className=" font-medium">Key Highlights:</span> 21
-                  active threats detected with an 11-threat reduction from
-                  yesterday, demonstrating effective threat mitigation. 247
-                  devices monitored with 98% uptime.
+                  <span className=" font-medium">Key Highlights:</span>{" "}
+                  {threats?.totalCount} active threats detected with a +{diff}{" "}
+                  threat {Math.sign(diff) > 0 ? "increase" : "decrease"} from
+                  yesterday, demonstrating effective threat mitigation.{" "}
+                  {riskScore?.assetCount} devices monitored with 99% uptime.
                 </p>
               </div>
             </div>
@@ -71,10 +91,13 @@ export default function ReportModal() {
             <div>
               <p className=" mb-2 font-medium">Operational Performance</p>
               <div className="w-full bg-neutral-50 text-sm p-8 rounded">
-                <ModalItem title="Incidents Resolved" value="12" />
+                <ModalItem
+                  title="Incidents Resolved"
+                  value={threats?.totalCount}
+                />
                 <ModalItem title="Avg. Resolution Time" value="2.4h" />
-                <ModalItem title="Total Assets" value="247" />
-                <ModalItem title="System Uptime" value="98%" />
+                <ModalItem title="Total Assets" value={riskScore?.assetCount} />
+                <ModalItem title="System Uptime" value="99%" />
               </div>
             </div>
           </div>
@@ -197,30 +220,3 @@ function ModalRecommendation({
     </div>
   );
 }
-
-// Create styles
-const styles = StyleSheet.create({
-  page: {
-    flexDirection: "row",
-    backgroundColor: "#E4E4E4",
-  },
-  section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1,
-  },
-});
-
-// Create Document Component
-const MyDocument = () => (
-  <Document>
-    <Page size="A4" style={styles.page}>
-      <View style={styles.section}>
-        <Text>Section #1</Text>
-      </View>
-      <View style={styles.section}>
-        <Text>Section #2</Text>
-      </View>
-    </Page>
-  </Document>
-);

@@ -38,3 +38,99 @@ export function formatDateTime(isoString: string): FormattedDateTime {
     time: formattedTime,
   };
 }
+
+export async function getThreatsToday() {
+  const today = new Date();
+  const yesterday = new Date(today);
+
+  today.setUTCHours(12, 0, 0, 0);
+  yesterday.setUTCHours(12, 0, 0, 0);
+
+  yesterday.setDate(today.getDate() - 1);
+
+  const endDateTime = today.toISOString().replace(/\.\d{3}Z$/, "Z");
+  const startDateTime = yesterday.toISOString().replace(/\.\d{3}Z$/, "Z");
+
+  const t = await fetch(
+    `https://api.xdr.trendmicro.com/v3.0/workbench/alerts?startDateTime=${startDateTime}&endDateTime=${endDateTime}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${process.env.TOKEN}`,
+      },
+    }
+  );
+
+  if (!t.ok) {
+    const errorText = await t.text();
+    console.log("Error response:", errorText);
+    throw new Error(`HTTP error! status: ${t.status}`);
+  }
+
+  const data = await t.json();
+
+  return data;
+}
+
+export async function getVulnerabilities(
+  request: Request,
+  { params }: { params: { slug: string[] } }
+) {
+  const { slug } = params || {};
+
+  const headers: HeadersInit = {
+    "X-ApiKeys": `${process.env.APIKEYS}`,
+  };
+
+  const t = await fetch(
+    `https://cloud.tenable.com/workbenches/vulnerabilities${
+      slug !== undefined
+        ? "?filter.0.filter=severity&filter.0.quality=eq&filter.0.value=" +
+          slug[0]
+        : ""
+    }`,
+    {
+      method: "GET",
+      headers,
+    }
+  );
+
+  if (!t.ok) {
+    throw new Error(`HTTP error! status: ${t.status}`);
+  }
+
+  const data = await t.json();
+
+  return data;
+}
+
+export async function getThreats(
+  request: Request,
+  { params }: { params: { slug: string[] } }
+) {
+  const { slug } = params || {};
+
+  const headers: HeadersInit = {
+    Authorization: `Bearer ${process.env.TOKEN}`,
+  };
+
+  if (typeof slug !== "undefined") {
+    headers["TMV1-Filter"] = `severity eq '${slug[0]}'`;
+  }
+
+  const t = await fetch(
+    `https://api.xdr.trendmicro.com/v3.0/workbench/alerts`,
+    {
+      method: "GET",
+      headers,
+    }
+  );
+
+  if (!t.ok) {
+    throw new Error(`HTTP error! status: ${t.status}`);
+  }
+
+  const data = await t.json();
+
+  return data;
+}

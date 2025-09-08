@@ -17,6 +17,7 @@ export default function ComplianceScoreCard() {
         (vulnerability: RiskScoreResponse) =>
           typeof vulnerability.cvss3_base_score === "number"
       )
+      .splice(0, 10)
       .map(
         (vulnerability: RiskScoreResponse) => vulnerability.cvss3_base_score
       );

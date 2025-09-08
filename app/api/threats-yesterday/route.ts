@@ -1,4 +1,4 @@
-export async function GET(request: Request) {
+export async function GET() {
   const now = new Date();
 
   const endDate = new Date(now);

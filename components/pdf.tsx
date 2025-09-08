@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Document,
   Image,
@@ -6,30 +6,31 @@ import {
   Text,
   View,
   StyleSheet,
-  PDFDownloadLink,
 } from "@react-pdf/renderer";
-import { AlertTriangle, Shield, CheckCircle2 } from "lucide-react";
+import useSWR from "swr";
+import { useRiskScore } from "@/hooks/vulnerabilities/use-vulnerabilities";
 
-// PDF Styles
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 const styles = StyleSheet.create({
   page: {
     flexDirection: "column",
     backgroundColor: "#ffffff",
-    padding: 30,
+    padding: 15,
     fontFamily: "Helvetica",
   },
   section: {
-    marginBottom: 20,
+    marginBottom: 15,
   },
   sectionTitle: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: "bold",
     marginBottom: 8,
     color: "#374151",
   },
   contentBox: {
     backgroundColor: "#fafafa",
-    padding: 20,
+    padding: 15,
     borderRadius: 4,
     fontSize: 11,
     lineHeight: 1.5,
@@ -70,8 +71,8 @@ const styles = StyleSheet.create({
   modalItem: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 6,
-    paddingBottom: 6,
+    marginBottom: 3,
+    paddingBottom: 3,
   },
   modalItemTitle: {
     fontSize: 11,
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingTop: 10,
+    paddingTop: 7,
   },
   footerText: {
     fontSize: 10,
@@ -127,21 +128,26 @@ const styles = StyleSheet.create({
     fontWeight: "medium",
   },
   image: {
-    width: 60,
-    height: 60,
+    width: 40,
+    height: 40,
     marginBottom: 20,
   },
 });
 
-// PDF Components
-const ModalItem = ({ title, value }) => (
+const ModalItem = ({ title, value }: { title: string; value: string }) => (
   <View style={styles.modalItem}>
     <Text style={styles.modalItemTitle}>{title}</Text>
     <Text style={styles.modalItemValue}>{value}</Text>
   </View>
 );
 
-const ModalRecommendation = ({ title, value, iconType }) => (
+const ModalRecommendation = ({
+  title,
+  value,
+}: {
+  title: string;
+  value: string;
+}) => (
   <View style={styles.recommendation}>
     <View style={styles.recommendationContent}>
       <Text style={styles.recommendationTitle}>• {title}</Text>
@@ -150,97 +156,114 @@ const ModalRecommendation = ({ title, value, iconType }) => (
   </View>
 );
 
-const RiskScoreCard = () => (
-  <View style={styles.gridItem}>
-    <Text style={styles.cardTitle}>Risk Score</Text>
-    <Text style={styles.cardValue}>61.1/100</Text>
-    <Text style={styles.cardSubtext}>Medium Risk Level</Text>
-  </View>
-);
+const RiskScoreCard = () => {
+  const { riskScore } = useRiskScore();
+  return (
+    <View style={styles.gridItem}>
+      <Text style={styles.cardTitle}>Risk Score</Text>
+      <Text style={styles.cardValue}>{riskScore?.riskIndex}</Text>
+      <Text style={styles.cardSubtext}>
+        {riskScore.riskLevel.charAt(0).toUpperCase() +
+          riskScore.riskLevel.slice(1)}{" "}
+        Risk Level
+      </Text>
+    </View>
+  );
+};
 
-const ThreatsCard = () => (
-  <View style={styles.gridItem}>
-    <Text style={styles.cardTitle}>Active Threats</Text>
-    <Text style={styles.cardValue}>21</Text>
-    <Text style={[styles.cardSubtext, styles.threatReduction]}>
-      -11 from yesterday
-    </Text>
-  </View>
-);
+const ThreatsCard = () => {
+  const { data: threats } = useSWR("api/threats-today", fetcher);
+  const { data: t } = useSWR("api/threats-yesterday", fetcher);
 
-// Main PDF Document
-export const SecurityReportDocument = () => (
-  <Document>
-    <Page size="A4" style={styles.page}>
-      <Image source={"/firs_logo_small.png"} style={styles.image} />
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>
-          Cyber Risk Dashboard Executive Summary
-        </Text>
-        <View style={styles.contentBox}>
-          <View style={styles.paragraph}>
+  const diff = threats?.totalCount - t?.totalCount;
+
+  return (
+    <View style={styles.gridItem}>
+      <Text style={styles.cardTitle}>Active Threats</Text>
+      <Text style={styles.cardValue}>{threats?.totalCount}</Text>
+      <Text style={[styles.cardSubtext, styles.threatReduction]}>
+        {`${diff > 0 ? "+" : ""}${diff} `} from yesterday
+      </Text>
+    </View>
+  );
+};
+
+export const SecurityReportDocument = () => {
+  const { riskScore } = useRiskScore();
+  const { data: threats } = useSWR("api/threats-today", fetcher);
+  const { data: t } = useSWR("api/threats-yesterday", fetcher);
+  const diff = threats?.totalCount - t?.totalCount;
+  return (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        <Image source={"/firs_logo_small.png"} style={styles.image} />
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>
+            Cyber Risk Dashboard Executive Summary
+          </Text>
+          <View style={styles.contentBox}>
+            <View style={styles.paragraph}>
+              <Text>
+                <Text style={styles.boldText}>Overall Security Posture: </Text>
+                Medium Risk ({riskScore?.riskIndex}/100) - Your organization
+                maintains a reasonable security stance with active threat
+                monitoring and incident response capabilities.
+              </Text>
+            </View>
             <Text>
-              <Text style={styles.boldText}>Overall Security Posture: </Text>
-              Medium Risk (61.1/100) - Your organization maintains a reasonable
-              security stance with active threat monitoring and incident
-              response capabilities.
+              <Text style={styles.boldText}>Key Highlights: </Text>
+              {threats?.totalCount} active threats detected with an {diff}
+              threat {Math.sign(diff) > 0 ? "increase" : "decrease"} from
+              yesterday, demonstrating effective threat mitigation.{" "}
+              {riskScore?.assetCount} devices monitored with 99% uptime.
             </Text>
           </View>
-          <Text>
-            <Text style={styles.boldText}>Key Highlights: </Text>
-            21 active threats detected with an 11-threat reduction from
-            yesterday, demonstrating effective threat mitigation. 247 devices
-            monitored with 98% uptime.
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Risk Assessment</Text>
+          <View style={styles.gridContainer}>
+            <RiskScoreCard />
+            <ThreatsCard />
+          </View>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Operational Performance</Text>
+          <View style={styles.contentBox}>
+            <ModalItem title="Incidents Resolved" value={threats?.totalCount} />
+            <ModalItem title="Avg. Resolution Time" value="2.4h" />
+            <ModalItem title="Total Assets" value={riskScore?.assetCount} />
+            <ModalItem title="System Uptime" value="99%" />
+          </View>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Key Recommendations</Text>
+          <View style={styles.contentBox}>
+            <ModalRecommendation
+              title="Address SSL Certificate Issues"
+              value="2 systems have SSL certificate vulnerabilities that require immediate attention"
+            />
+            <ModalRecommendation
+              title="Enhance Malware Protection"
+              value="High malware risk detected - consider additional endpoint protection measures"
+            />
+            <ModalRecommendation
+              title="Maintain Current Response Times"
+              value="2.4h average response time is excellent - continue current procedures"
+            />
+          </View>
+        </View>
+
+        <View style={styles.divider} />
+
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>
+            Report generated on {new Date().toLocaleDateString()}
           </Text>
         </View>
-      </View>
-
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Risk Assessment</Text>
-        <View style={styles.gridContainer}>
-          <RiskScoreCard />
-          <ThreatsCard />
-        </View>
-      </View>
-
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Operational Performance</Text>
-        <View style={styles.contentBox}>
-          <ModalItem title="Incidents Resolved" value="12" />
-          <ModalItem title="Avg. Resolution Time" value="2.4h" />
-          <ModalItem title="Total Assets" value="247" />
-          <ModalItem title="System Uptime" value="98%" />
-        </View>
-      </View>
-
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Key Recommendations</Text>
-        <View style={styles.contentBox}>
-          <ModalRecommendation
-            iconType="alert"
-            title="Address SSL Certificate Issues"
-            value="2 systems have SSL certificate vulnerabilities that require immediate attention"
-          />
-          <ModalRecommendation
-            iconType="shield"
-            title="Enhance Malware Protection"
-            value="High malware risk detected - consider additional endpoint protection measures"
-          />
-          <ModalRecommendation
-            iconType="check"
-            title="Maintain Current Response Times"
-            value="2.4h average response time is excellent - continue current procedures"
-          />
-        </View>
-      </View>
-
-      <View style={styles.divider} />
-
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>
-          Report generated on {new Date().toLocaleDateString()}
-        </Text>
-      </View>
-    </Page>
-  </Document>
-);
+      </Page>
+    </Document>
+  );
+};
