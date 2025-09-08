@@ -70,7 +70,7 @@ function ReportModal({ open, close }: { open: boolean; close: () => void }) {
                 </p>
                 <p>
                   <span className=" font-medium">Key Highlights:</span>{" "}
-                  {threats?.totalCount} active threats detected with a +{diff}{" "}
+                  {threats?.totalCount} active threats detected with a {diff}{" "}
                   threat {Math.sign(diff) > 0 ? "increase" : "decrease"} from
                   yesterday, demonstrating effective threat mitigation.{" "}
                   {riskScore?.assetCount} devices monitored with 99% uptime.

@@ -212,7 +212,7 @@ export const SecurityReportDocument = () => {
             </View>
             <Text>
               <Text style={styles.boldText}>Key Highlights: </Text>
-              {threats?.totalCount} active threats detected with an {diff}
+              {threats?.totalCount} active threats detected with a {` ${diff} `}
               threat {Math.sign(diff) > 0 ? "increase" : "decrease"} from
               yesterday, demonstrating effective threat mitigation.{" "}
               {riskScore?.assetCount} devices monitored with 99% uptime.

@@ -22,13 +22,7 @@ export default function Home() {
         </div>
         <div className=" flex items-center gap-4">
           <ReportModalButton />
-          {/* <Button
-            onClick={() => setIsOpen(true)}
-            className="inline-flex items-center gap-2 rounded-md bg-blue-700 px-3 py-1.5 text-sm/6 font-medium text-white shadow-inner shadow-white/10 focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-blue-600 data-open:bg-blue-700"
-          >
-            <FileText className="h-4 w-4 mr-2" />
-            Generate Report
-          </Button> */}
+
           <Button className="inline-flex items-center gap-2 border rounded-md px-3 py-1.5 text-sm/6 font-medium text-black shadow-inner shadow-white/10 focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-neutral-100 data-open:bg-neutral-100 ">
             <RefreshCwIcon className="h-4 w-4 mr-2" />
             Refresh
