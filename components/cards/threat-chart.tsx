@@ -13,13 +13,13 @@ import {
 } from "recharts";
 
 const data = [
-  { time: "Monday", threats: 45, blocked: 42 },
-  { time: "Tuesday", threats: 52, blocked: 48 },
-  { time: "Wednesday", threats: 38, blocked: 35 },
-  { time: "Thursday", threats: 21, blocked: 19 },
-  { time: "Friday", threats: 33, blocked: 30 },
-  { time: "Saturday", threats: 28, blocked: 26 },
-  { time: "Sunday", threats: 21, blocked: 21 },
+  { time: "Monday", threats: 45 },
+  { time: "Tuesday", threats: 52 },
+  { time: "Wednesday", threats: 38 },
+  { time: "Thursday", threats: 21 },
+  { time: "Friday", threats: 33 },
+  { time: "Saturday", threats: 28 },
+  { time: "Sunday", threats: 21 },
 ];
 
 export default function ThreatChart() {

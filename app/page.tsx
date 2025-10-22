@@ -29,7 +29,7 @@ export default function Home() {
           </Button>
         </div>
       </div>
-      <div className=" w-full flex justify-end">
+      {/* <div className=" w-full flex justify-end">
         <TotalAssets />
       </div>
       <main className="grid grid-cols-[1fr_1fr_1fr_1fr] gap-4">
@@ -47,10 +47,10 @@ export default function Home() {
           <div className=" flex justify-center items-center w-full">
             <p className=" text-3xl font-semibold text-green-500">12</p>
           </div>
-        </Card>
+        </Card> */}
 
-        <ComplianceScoreCard />
-        <div className=" col-span-2">
+      <ComplianceScoreCard />
+      {/* <div className=" col-span-2">
           <ThreatChart />
         </div>
         <div className=" row-span-2 col-span-2">
@@ -59,7 +59,7 @@ export default function Home() {
         <div className=" row-span-2 col-span-2">
           <VulnerabilityDetection />
         </div>
-      </main>
+      </main> */}
       {/* <ReportModal open={isOpen} close={() => setIsOpen(false)} /> */}
     </div>
   );
